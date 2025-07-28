@@ -42,7 +42,6 @@ class Manus(ToolCallAgent):
             GetPerformanceBySubDepartmentIdAndMonth(),
             GetSubDepartmentIdBySubDepartmentName(),
             GetCurrentTime(),
-            TimeConvertToUSA(),
             PythonExecute(),
             BrowserUseTool(),
             StrReplaceEditor(),

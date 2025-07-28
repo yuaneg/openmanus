@@ -19,7 +19,7 @@ class GetUserIdFromUserName(BaseTool):
     }
 
     async def execute(self, username: str) -> str:
-        print("入参:"+username)
+        print("通过员工姓名查询分司ID:" + username)
         return str({
             "分公司名称": "厦门分公司",
             "分公司ID": "147"

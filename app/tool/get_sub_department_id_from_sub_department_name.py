@@ -15,11 +15,11 @@ class GetSubDepartmentIdBySubDepartmentName(BaseTool):
                 "description": "分公司名称",
             }
         },
-        "required": ["username"],
+        "required": ["subdepartmentname"],
     }
 
     async def execute(self, subdepartmentname: str) -> str:
-        print("入参111:"+subdepartmentname)
+        print("通过分司名称获取分司ID,分公司名称:"+subdepartmentname)
         return str({
             "分公司名称": "厦门分公司",
             "分公司ID": "147"
