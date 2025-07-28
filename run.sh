@@ -1,4 +1,4 @@
 #!/bin/bash
-cd "$(dirname "$0")"
-source venv/bin/activate
+git reset --hard HEAD
+git pull
 python main.py

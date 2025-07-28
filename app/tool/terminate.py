@@ -25,4 +25,4 @@ class Terminate(BaseTool):
 
     async def execute(self, status: str, result: str) -> str:
         """Finish the current execution"""
-        return f"任务执行结束: {status}" + "\n" + result
+        return f"任务执行结束✌️✌️✌️✌️✌️:" + "\n" + result
