@@ -296,7 +296,7 @@ class WebSearch(BaseTool):
 
         for engine_name in engine_order:
             engine = self._search_engine[engine_name]
-            logger.info(f"🔎 Attempting search with {engine_name.capitalize()}...")
+            logger.info(f"🔎 开始使用 {engine_name.capitalize()}...进行搜索")
             search_items = await self._perform_search_with_engine(
                 engine, query, num_results, search_params
             )
@@ -308,7 +308,6 @@ class WebSearch(BaseTool):
                 logger.info(
                     f"Search successful with {engine_name.capitalize()} after trying: {', '.join(failed_engines)}"
                 )
-
             # Transform search items into structured results
             return [
                 SearchResult(
@@ -360,9 +359,9 @@ class WebSearch(BaseTool):
     def _get_engine_order(self) -> List[str]:
         """Determines the order in which to try search engines."""
         preferred = (
-            getattr(config.search_config, "engine", "google").lower()
+            getattr(config.search_config, "engine", "baidu").lower()
             if config.search_config
-            else "google"
+            else "baidu"
         )
         fallbacks = (
             [engine.lower() for engine in config.search_config.fallback_engines]
@@ -415,4 +414,4 @@ if __name__ == "__main__":
             query="Python programming", fetch_content=True, num_results=1
         )
     )
-    print(search_response.to_tool_result())
+    print(search_response)

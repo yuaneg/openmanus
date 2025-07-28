@@ -333,7 +333,7 @@ class StrReplaceEditor(BaseTool):
         success_msg += self._make_output(
             snippet, f"a snippet of {path}", start_line + 1
         )
-        success_msg += "Review the changes and make sure they are as expected. Edit the file again if necessary."
+        success_msg += "检查更改并确保其符合预期。如有必要，请再次编辑该文件。"
 
         return CLIResult(output=success_msg)
 
@@ -387,7 +387,7 @@ class StrReplaceEditor(BaseTool):
             "a snippet of the edited file",
             max(1, insert_line - SNIPPET_LINES + 1),
         )
-        success_msg += "Review the changes and make sure they are as expected (correct indentation, no duplicate lines, etc). Edit the file again if necessary."
+        success_msg += "检查更改并确保其符合预期（缩进正确、无重复行等）。如有必要，请再次编辑文件。"
 
         return CLIResult(output=success_msg)
 

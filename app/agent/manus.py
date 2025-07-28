@@ -11,6 +11,8 @@ from app.tool import Terminate, ToolCollection
 from app.tool.ask_human import AskHuman
 from app.tool.browser_use_tool import BrowserUseTool
 from app.tool.mcp import MCPClients, MCPClientTool
+from app.tool.get_current_time import GetCurrentTime
+from app.tool.time_convert_to_usa import TimeConvertToUSA
 from app.tool.python_execute import PythonExecute
 from app.tool.str_replace_editor import StrReplaceEditor
 
@@ -33,6 +35,8 @@ class Manus(ToolCallAgent):
     # Add general-purpose tools to the tool collection
     available_tools: ToolCollection = Field(
         default_factory=lambda: ToolCollection(
+            GetCurrentTime(),
+            TimeConvertToUSA(),
             PythonExecute(),
             BrowserUseTool(),
             StrReplaceEditor(),
@@ -89,11 +93,11 @@ class Manus(ToolCallAgent):
                 logger.error(f"Failed to connect to MCP server {server_id}: {e}")
 
     async def connect_mcp_server(
-        self,
-        server_url: str,
-        server_id: str = "",
-        use_stdio: bool = False,
-        stdio_args: List[str] = None,
+            self,
+            server_url: str,
+            server_id: str = "",
+            use_stdio: bool = False,
+            stdio_args: List[str] = None,
     ) -> None:
         """Connect to an MCP server and add its tools."""
         if use_stdio:

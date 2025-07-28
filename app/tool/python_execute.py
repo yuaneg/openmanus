@@ -35,6 +35,7 @@ class PythonExecute(BaseTool):
             result_dict["success"] = False
         finally:
             sys.stdout = original_stdout
+            print(original_stdout)
 
     async def execute(
         self,

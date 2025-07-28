@@ -1,6 +1,5 @@
 from app.tool.base import BaseTool
 
-
 _TERMINATE_DESCRIPTION = """Terminate the interaction when the request is met OR if the assistant cannot proceed further with the task.
 When you have finished all the tasks, call this tool to end the work."""
 
@@ -14,12 +13,16 @@ class Terminate(BaseTool):
             "status": {
                 "type": "string",
                 "description": "The finish status of the interaction.",
-                "enum": ["success", "failure"],
+                "enum": ["[success]", "failure"],
+            },
+            "result": {
+                "type": "string",
+                "description": "最总结果汇总,注意标点和换行",
             }
         },
-        "required": ["status"],
+        "required": ["status", "result"],
     }
 
-    async def execute(self, status: str) -> str:
+    async def execute(self, status: str, result: str) -> str:
         """Finish the current execution"""
-        return f"The interaction has been completed with status: {status}"
+        return f"任务执行结束: {status}" + "\n" + result

@@ -1,6 +1,8 @@
 import math
 from typing import Dict, List, Optional, Union
 
+
+from llm_request_logger import LLMRequestLogger
 import tiktoken
 from openai import (
     APIError,
@@ -240,11 +242,11 @@ class LLM:
         # Only track tokens if max_input_tokens is set
         self.total_input_tokens += input_tokens
         self.total_completion_tokens += completion_tokens
-        logger.info(
-            f"Token usage: Input={input_tokens}, Completion={completion_tokens}, "
-            f"Cumulative Input={self.total_input_tokens}, Cumulative Completion={self.total_completion_tokens}, "
-            f"Total={input_tokens + completion_tokens}, Cumulative Total={self.total_input_tokens + self.total_completion_tokens}"
-        )
+        # logger.info(
+        #     f"Token usage: Input={input_tokens}, Completion={completion_tokens}, "
+        #     f"Cumulative Input={self.total_input_tokens}, Cumulative Completion={self.total_completion_tokens}, "
+        #     f"Total={input_tokens + completion_tokens}, Cumulative Total={self.total_input_tokens + self.total_completion_tokens}"
+        # )
 
     def check_token_limit(self, input_tokens: int) -> bool:
         """Check if token limits are exceeded"""
@@ -415,6 +417,7 @@ class LLM:
                 params["temperature"] = (
                     temperature if temperature is not None else self.temperature
                 )
+            LLMRequestLogger.log_llm_request(params)
 
             if not stream:
                 # Non-streaming request
@@ -436,7 +439,7 @@ class LLM:
             self.update_token_count(input_tokens)
 
             response = await self.client.chat.completions.create(**params, stream=True)
-
+            LLMRequestLogger.log_llm_response(response)
             collected_messages = []
             completion_text = ""
             async for chunk in response:
@@ -587,6 +590,7 @@ class LLM:
                 params["temperature"] = (
                     temperature if temperature is not None else self.temperature
                 )
+            LLMRequestLogger.log_llm_request(params)
 
             # Handle non-streaming request
             if not stream:
@@ -596,11 +600,14 @@ class LLM:
                     raise ValueError("Empty or invalid response from LLM")
 
                 self.update_token_count(response.usage.prompt_tokens)
+                LLMRequestLogger.log_llm_response(response)
+
                 return response.choices[0].message.content
 
             # Handle streaming request
             self.update_token_count(input_tokens)
             response = await self.client.chat.completions.create(**params)
+            LLMRequestLogger.log_llm_response(response)
 
             collected_messages = []
             async for chunk in response:
@@ -729,10 +736,11 @@ class LLM:
                 )
 
             params["stream"] = False  # Always use non-streaming for tool requests
+            LLMRequestLogger.log_llm_request(params)
             response: ChatCompletion = await self.client.chat.completions.create(
                 **params
             )
-
+            LLMRequestLogger.log_llm_response(response)
             # Check if response is valid
             if not response.choices or not response.choices[0].message:
                 print(response)
@@ -764,3 +772,4 @@ class LLM:
         except Exception as e:
             logger.error(f"Unexpected error in ask_tool: {e}")
             raise
+

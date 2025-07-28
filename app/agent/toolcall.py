@@ -78,15 +78,17 @@ class ToolCallAgent(ReActAgent):
         content = response.content if response and response.content else ""
 
         # Log response info
-        logger.info(f"✨ {self.name}'s thoughts: {content}")
-        logger.info(
-            f"🛠️ {self.name} selected {len(tool_calls) if tool_calls else 0} tools to use"
-        )
+        #logger.info(f"✨ {self.name}'s thoughts: {content}")
+        if content:
+            logger.info(f"🤔思考: {content}")
+        # logger.info(
+        #     f"🛠️ {self.name} selected {len(tool_calls) if tool_calls else 0} tools to use"
+        # )
         if tool_calls:
             logger.info(
-                f"🧰 Tools being prepared: {[call.function.name for call in tool_calls]}"
+                f"🤖 Action执行 : {[call.function.name for call in tool_calls]} 参数: {tool_calls[0].function.arguments}"
             )
-            logger.info(f"🔧 Tool arguments: {tool_calls[0].function.arguments}")
+            # logger.info(f"🔧 action 参数: {tool_calls[0].function.arguments}")
 
         try:
             if response is None:
@@ -148,7 +150,7 @@ class ToolCallAgent(ReActAgent):
                 result = result[: self.max_observe]
 
             logger.info(
-                f"🎯 Tool '{command.function.name}' completed its mission! Result: {result}"
+                f"♻️ 执行结果 '{command.function.name}': {result}"
             )
 
             # Add tool response to memory
@@ -177,7 +179,7 @@ class ToolCallAgent(ReActAgent):
             args = json.loads(command.function.arguments or "{}")
 
             # Execute the tool
-            logger.info(f"🔧 Activating tool: '{name}'...")
+            #logger.info(f"🔧 action: '{name}'...")
             result = await self.available_tools.execute(name=name, tool_input=args)
 
             # Handle special tools
@@ -214,7 +216,7 @@ class ToolCallAgent(ReActAgent):
 
         if self._should_finish_execution(name=name, result=result, **kwargs):
             # Set agent state to finished
-            logger.info(f"🏁 Special tool '{name}' has completed the task!")
+            # logger.info(f"🏁 Special tool '{name}' has completed the task!")
             self.state = AgentState.FINISHED
 
     @staticmethod
