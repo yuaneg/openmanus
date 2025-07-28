@@ -7,9 +7,9 @@ import aiohttp
 from typing import Union, List
 
 
-class GetPerformanceBySubDepartmentIdAndMonth(BaseTool):
-    name: str = "get_performance_by_sub_department_id_and_month"
-    description: str = "通过分公司ID和月份查询分公司业绩汇总. (接口用途,查询分公司业绩)"
+class GetPerformanceBySubDepartmentIdAndMonthDetail(BaseTool):
+    name: str = "get_performance_by_sub_department_id_and_month_detail"
+    description: str = "通过分公司ID和月份查询分公司业绩详情. (接口用途 查询分公司业绩)"
     parameters: dict = {
         "type": "object",
         "properties": {
@@ -51,7 +51,7 @@ class GetPerformanceBySubDepartmentIdAndMonth(BaseTool):
 
         print(f"执行接口查询分司ID: {sub_ids}, 查询月份: {business_months}")
 
-        url = "https://scrm-test.ceboss.cn/scrm-web/ai/robot/getyeji"
+        url = "https://scrm-test.ceboss.cn/scrm-web/ai/robot/getyejidetail"
 
         # 构建查询参数
         params = []

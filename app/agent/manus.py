@@ -14,6 +14,7 @@ from app.tool.mcp import MCPClients, MCPClientTool
 from app.tool.get_current_time import GetCurrentTime
 from app.tool.get_sub_department_id_from_username import GetUserIdFromUserName
 from app.tool.get_performance_by_sub_department_id_and_month import GetPerformanceBySubDepartmentIdAndMonth
+from app.tool.get_performance_by_sub_department_id_and_month_detail import GetPerformanceBySubDepartmentIdAndMonthDetail
 from app.tool.get_sub_department_id_from_sub_department_name import GetSubDepartmentIdBySubDepartmentName
 from app.tool.time_convert_to_usa import TimeConvertToUSA
 from app.tool.python_execute import PythonExecute
@@ -40,6 +41,7 @@ class Manus(ToolCallAgent):
         default_factory=lambda: ToolCollection(
             GetUserIdFromUserName(),
             GetPerformanceBySubDepartmentIdAndMonth(),
+            GetPerformanceBySubDepartmentIdAndMonthDetail(),
             GetSubDepartmentIdBySubDepartmentName(),
             GetCurrentTime(),
             PythonExecute(),

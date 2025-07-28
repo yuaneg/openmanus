@@ -11,7 +11,7 @@ class GetSubDepartmentIdBySubDepartmentName(BaseTool):
     llm: LLM = Field(default_factory=lambda: LLM())
 
     name: str = "get_sub_department_id_from_sub_department_name"
-    description: str = "通过分公司的名字获取分公司的ID. 接口用途 查询分公司业绩"
+    description: str = "通过分公司的名字获取分公司的ID.(接口用途 查询分公司业绩)"
     parameters: dict = {
         "type": "object",
         "properties": {
