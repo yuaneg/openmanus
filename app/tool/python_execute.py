@@ -40,7 +40,7 @@ class PythonExecute(BaseTool):
     async def execute(
         self,
         code: str,
-        timeout: int = 5,
+        timeout: int = 10,
     ) -> Dict:
         """
         Executes the provided Python code with a timeout.
